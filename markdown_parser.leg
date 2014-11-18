@@ -484,10 +484,10 @@ Emph =      EmphStar | EmphUl
 
 Whitespace = Spacechar | Newline
 
-MathJax1 =    "$" a:StartList
+MathJax1 = "$" a:StartList
              ( !"$" . )+
              "$"
-             {▫▫
+             {
                  $$ = mk_str(yytext);
              }
 
@@ -497,7 +497,6 @@ MathJax2 =  "$$" a:StartList
              {
                  $$ = mk_str(yytext);
              }
-
 
 EmphStar =  '*' !Whitespace
             a:StartList
