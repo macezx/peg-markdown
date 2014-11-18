@@ -27,7 +27,7 @@ library: $(OBJS)
 	$(CC) -shared $(OBJS) -o libpeg-markdown.so
 	ar rcs libpeg-markdown.a $(OBJS)
 
-markdown_parser.c : markdown_parser.leg $(LEG) markdown_peg.h parsing_functions.c utility_functions.c
+markdown_parser.c : markdown_parser.leg $(LEG) markdown_peg.h parsing_functions.c utility_functions.c "$(PKG_CONFIG) --libs glib-2.0"
 	$(LEG) -o $@ $<
 
 .PHONY: clean test

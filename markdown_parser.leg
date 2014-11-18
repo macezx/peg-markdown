@@ -418,7 +418,9 @@ Inlines  =  a:StartList ( !Endline Inline { a = cons($$, a); }
                         | c:Endline &Inline { a = cons(c, a); } )+ Endline?
             { $$ = mk_list(LIST, a); }
 
-Inline  = Str
+Inline  = MathJax1
+        | MathJax2
+        | Str
         | Endline
         | UlOrStarLine
         | Space
@@ -481,6 +483,21 @@ UlLine   =      < "____" '_'* > | < Spacechar '_'+ &Spacechar >
 Emph =      EmphStar | EmphUl
 
 Whitespace = Spacechar | Newline
+
+MathJax1 =    "$" a:StartList
+             ( !"$" . )+
+             "$"
+             {▫▫
+                 $$ = mk_str(yytext);
+             }
+
+MathJax2 =  "$$" a:StartList
+            ( !"$$" .)+
+             "$$"
+             {
+                 $$ = mk_str(yytext);
+             }
+
 
 EmphStar =  '*' !Whitespace
             a:StartList
